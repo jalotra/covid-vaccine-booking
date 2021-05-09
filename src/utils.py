@@ -433,6 +433,7 @@ def book_appointment(request_header, details):
 def check_and_book(
     request_header, beneficiary_dtls, location_dtls, search_option, **kwargs
 ):
+    print(location_dtls)
     """
     This function
         1. Checks the vaccination calendar for available slots,
@@ -503,7 +504,10 @@ def check_and_book(
                 cleaned_options_for_display.append(item)
 
             display_table(cleaned_options_for_display)
-            randrow = random.randint(1, len(options))
+            # randrow = random.randint(1, len(options))
+            # randcol = random.randint(1, len(options[randrow - 1]["slots"]))
+            randrow = int(input("Enter the Row Id that you want to Book."))
+            # Choose a random column from possible options
             randcol = random.randint(1, len(options[randrow - 1]["slots"]))
             choice = str(randrow) + "." + str(randcol)
             print("Random Rows.Column:" + choice)
@@ -749,9 +753,9 @@ def generate_token_OTP(mobile, request_header):
     """
     This function generate OTP and returns a new token or None when not able to get token
     """
-    storage_url = "https://kvdb.io/3YgXf9PHYHbX6NsF7zP6Us/" + mobile
-    print("clearing OTP bucket: " + storage_url)
-    response = requests.put(storage_url, data={})
+    # storage_url = "https://kvdb.io/3YgXf9PHYHbX6NsF7zP6Us/" + mobile
+    # print("clearing OTP bucket: " + storage_url)
+    # response = requests.put(storage_url, data={})
     data = {
         "mobile": mobile,
         "secret": "U2FsdGVkX1+z/4Nr9nta+2DrVJSv7KS6VoQUSQ1ZXYDx/CJUkWxFYG6P3iM/VW+6jLQ9RDQVzp/RcZ8kbT41xw==",
@@ -773,23 +777,24 @@ def generate_token_OTP(mobile, request_header):
 
     time.sleep(10)
     t_end = time.time() + 60 * 3  # try to read OTP for atmost 3 minutes
-    while time.time() < t_end:
-        response = requests.get(storage_url)
-        if response.status_code == 200:
-            print("OTP SMS is:" + response.text)
-            print("OTP SMS len is:" + str(len(response.text)))
+    if time.time() < t_end:
+        OTP = input("Enter the OTP that you just got.")
+        # response = requests.get(storage_url)
+        # if response.status_code == 200:
+        #     print("OTP SMS is:" + response.text)
+        #     print("OTP SMS len is:" + str(len(response.text)))
 
-            OTP = response.text
-            OTP = OTP.replace("Your OTP to register/access CoWIN is ", "")
-            OTP = OTP.replace(". It will be valid for 3 minutes. - CoWIN", "")
-            if not OTP:
-                time.sleep(5)
-                continue
-            break
-        else:
-            # Hope it won't 500 a little later
-            print("error fetching OTP API:" + response.text)
-            time.sleep(5)
+        #     OTP = response.text
+        #     OTP = OTP.replace("Your OTP to register/access CoWIN is ", "")
+        #     OTP = OTP.replace(". It will be valid for 3 minutes. - CoWIN", "")
+        #     if not OTP:
+        #         time.sleep(5)
+        #         continue
+        #     break
+        # else:
+        #     # Hope it won't 500 a little later
+        #     print("error fetching OTP API:" + response.text)
+        #     time.sleep(5)
 
     if not OTP:
         return None
