@@ -10,7 +10,7 @@ from utils import generate_token_OTP, check_and_book, beep, BENEFICIARIES_URL, W
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--token', help='Pass token directly')
-    parser.add_argument('--phone', help = "Add Registered Phone Number directly.")
+    parser.add_argument('--phone', required = True, help = "Add Registered Phone Number directly.")
     args = parser.parse_args()
 
     filename = 'vaccine-booking-details.json'
