@@ -10,7 +10,7 @@ from utils import generate_token_OTP, check_and_book, beep, BENEFICIARIES_URL, W
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--token', help='Pass token directly')
-    parser.add_argument('--phone', required = True, help = "Add Registered Phone Number directly.")
+    parser.add_argument('--phone', help = "Add Registered Phone Number directly.")
     args = parser.parse_args()
 
     filename = 'vaccine-booking-details.json'
@@ -33,6 +33,8 @@ def main():
                 mobile = int(args.phone)
                 if(len(str(mobile)) != 10):
                     raise AssertionError(f"The length of phone number is not 10, it is {mobile}")
+            else:
+                mobile = int(input('Please enter the mobile now. Tip : You can pass it a param also using `--phone`\n'))
             while token is None:
                 token = generate_token_OTP(mobile, base_request_header)
 
