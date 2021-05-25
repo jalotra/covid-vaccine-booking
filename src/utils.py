@@ -758,7 +758,7 @@ def generate_token_OTP(mobile, request_header):
     # response = requests.put(storage_url, data={})
     data = {
         "mobile": mobile,
-        "secret": "U2FsdGVkX1+z/4Nr9nta+2DrVJSv7KS6VoQUSQ1ZXYDx/CJUkWxFYG6P3iM/VW+6jLQ9RDQVzp/RcZ8kbT41xw==",
+        "secret": "U2FsdGVkX18BvjOVPDcXyiu/QNIRsfFfKPBE7b1d6auwbUdw26//Bn/ppK69B6V64RC/R6+GaSA+oAyDR1Mrgw==",
     }
     print(f"Requesting OTP with mobile number {mobile}..")
     txnId = requests.post(
@@ -778,7 +778,7 @@ def generate_token_OTP(mobile, request_header):
     time.sleep(10)
     t_end = time.time() + 60 * 3  # try to read OTP for atmost 3 minutes
     if time.time() < t_end:
-        OTP = input("Enter the OTP that you just got.")
+        OTP = input("Enter the OTP that you just got.\n")
         # response = requests.get(storage_url)
         # if response.status_code == 200:
         #     print("OTP SMS is:" + response.text)

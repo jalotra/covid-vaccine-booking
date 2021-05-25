@@ -22,6 +22,8 @@ def main():
     try:
         base_request_header = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
+            'origin': 'https://selfregistration.cowin.gov.in/',
+            'referer': 'https://selfregistration.cowin.gov.in/'
         }
 
         token = None
@@ -32,7 +34,7 @@ def main():
             if args.phone :
                 mobile = int(args.phone)
                 if(len(str(mobile)) != 10):
-                    raise AssertionError(f"The length of phone number is not 10, it is {mobile}")
+                    raise AssertionError(f"The length of phone number is not 10, it is {mobile}\n")
             else:
                 mobile = int(input('Please enter the mobile now. Tip : You can pass it a param also using `--phone`\n'))
             while token is None:
